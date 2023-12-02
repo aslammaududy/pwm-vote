@@ -9,7 +9,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 
 class CandidateResource extends Resource
 {
@@ -20,6 +19,14 @@ class CandidateResource extends Resource
     protected static ?string $slug = 'candidates';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'id';
+
+    public static function getNavigationUrl(): string
+    {
+        if (!auth()->user()->is_admin) {
+            return Pages\CreateCandidate::getNavigationUrl();
+        }
+        return parent::getNavigationUrl();
+    }
 
     public static function form(Form $form): Form
     {
@@ -37,9 +44,9 @@ class CandidateResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('name')->label('Nama'),
-            TextColumn::make('votes')->label('suara')
-        ]);
+            TextColumn::make('name')->label('Nama Kandidat'),
+            TextColumn::make('votes')->label('Suara yang Didapat')
+        ])->deferLoading();
     }
 
     public static function getPages(): array
