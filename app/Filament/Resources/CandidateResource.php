@@ -4,12 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CandidateResource\Pages;
 use App\Models\Candidate;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CandidateResource extends Resource
 {
@@ -24,17 +26,36 @@ class CandidateResource extends Resource
     public static function getNavigationUrl(): string
     {
         if (!auth()->user()->is_admin) {
-            return Pages\CreateCandidate::getNavigationUrl();
+            return Pages\VoteCandidate::getNavigationUrl();
         }
         return parent::getNavigationUrl();
+    }
+
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            TextInput::make('name')
+                ->label('Nama')
+                ->required()
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('name')->label('Nama Kandidat'),
+            TextColumn::make('name')
+                ->label('Nama Kandidat')
+                ->searchable(query: function (Builder $query, string $search): Builder {
+                    return $query
+                        ->whereFullText('name', $search, ['mode' => 'natural']);
+                }),
             TextColumn::make('votes')->label('Suara yang Didapat')
-        ])->deferLoading();
+        ])
+            ->actions([
+                EditAction::make('edit'),
+                DeleteAction::make('delete')
+            ])
+            ->deferLoading();
     }
 
     public static function getPages(): array
