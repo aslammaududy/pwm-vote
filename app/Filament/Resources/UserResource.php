@@ -83,7 +83,8 @@ class UserResource extends Resource
                 Tables\Filters\Filter::make('has_chosen')
                     ->label('Telah memilih')
                     ->query(fn(Builder $query): Builder => $query->where('has_chosen', true))
-            ]);
+            ])
+            ->deferLoading();
     }
 
     public static function getRelations(): array
