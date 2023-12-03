@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CandidateResource extends Resource
 {
@@ -24,6 +25,15 @@ class CandidateResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'id';
 
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()->username === 'admin';
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()->username === 'admin';
+    }
     public static function getNavigationUrl(): string
     {
         if (!auth()->user()->is_admin) {

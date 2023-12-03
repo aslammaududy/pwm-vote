@@ -13,6 +13,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class UserResource extends Resource
@@ -25,6 +26,16 @@ class UserResource extends Resource
     public static function canViewAny(): bool
     {
         return auth()->user()->is_admin;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()->username === 'admin';
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()->username === 'admin';
     }
 
     public static function form(Form $form): Form
