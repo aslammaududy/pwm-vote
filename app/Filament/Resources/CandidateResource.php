@@ -4,7 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CandidateResource\Pages;
 use App\Models\Candidate;
-use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
@@ -28,19 +29,6 @@ class CandidateResource extends Resource
         return parent::getNavigationUrl();
     }
 
-    public static function form(Form $form): Form
-    {
-        return $form->schema([
-            Placeholder::make('created_at')
-                ->label('Created Date')
-                ->content(fn(?Candidate $record): string => $record?->created_at?->diffForHumans() ?? '-'),
-
-            Placeholder::make('updated_at')
-                ->label('Last Modified Date')
-                ->content(fn(?Candidate $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
-        ]);
-    }
-
     public static function table(Table $table): Table
     {
         return $table->columns([
@@ -55,6 +43,7 @@ class CandidateResource extends Resource
             'index' => Pages\ListCandidates::route('/'),
             'create' => Pages\CreateCandidate::route('/create'),
             'edit' => Pages\EditCandidate::route('/{record}/edit'),
+            'vote' => Pages\VoteCandidate::route('/vote'),
         ];
     }
 

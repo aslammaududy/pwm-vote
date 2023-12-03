@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Filament\Resources\CandidateResource\Pages;
+
+use App\Filament\Resources\CandidateResource;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Pages\Concerns\InteractsWithFormActions;
+use Filament\Resources\Pages\Page;
+use Illuminate\Support\Str;
+
+class VoteCandidate extends Page implements HasForms
+{
+    use InteractsWithFormActions;
+
+    protected static string $resource = CandidateResource::class;
+
+    protected static string $view = 'filament.resources.candidate-resource.pages.vote-candidate';
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill();
+        static::authorizeResourceAccess();
+    }
+
+    public function form(Form $form): Form
+    {
+        $candidates = static::getModel()::all();
+
+        foreach ($candidates as $candidate) $schema[] = Checkbox::make('vote_' . $candidate->id)
+            ->label($candidate->name);
+
+        return $form->schema($schema ?? [])
+            ->statePath('data')
+            ->columns();
+    }
+
+    public function submit()
+    {
+        $data = $this->form->getState();
+
+        foreach ($data as $key => $item) {
+            $id = Str::of($key)->remove('vote_');
+
+            if ($item === true) {
+                $candidate = static::getModel()::find($id);
+                $candidate->votes += 1;
+                $candidate->save();
+            }
+        }
+
+        //reset form
+        $this->form->fill();
+
+        $this->getCreatedNotification()?->send();
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        $title = $this->getCreatedNotificationTitle();
+
+        if (blank($title)) {
+            return null;
+        }
+
+        return Notification::make()
+            ->success()
+            ->title($title);
+    }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Suara berhasil diberikan';
+    }
+
+
+}
