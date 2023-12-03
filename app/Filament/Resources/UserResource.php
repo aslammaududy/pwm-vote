@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -75,7 +76,8 @@ class UserResource extends Resource
                     ->label('Telah Memilih')
                     ->formatStateUsing(fn(string $state): string => $state == 1 ? 'Ya' : 'Tidak')
             ])->actions([
-                EditAction::make('edit')
+                EditAction::make('edit'),
+                DeleteAction::make('delete')
             ])->filters([
                 Tables\Filters\Filter::make('is_admin')
                     ->label('Admin')
