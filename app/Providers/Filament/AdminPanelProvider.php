@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -54,6 +55,22 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])->renderHook(
+                'panels::topbar.start',
+                fn(): string => new HtmlString(
+                    '<h3>
+                              Musyawarah Wilayah Ke XI Pemuda Muhammadiyah Aceh - Banda Aceh, 8 - 10 Des 2023
+                          </h3>',
+                ))
+            ->brandName(new HtmlString(
+                '<div class="grid grid-flow-col auto-cols-max">
+                        <div>
+                            <img width="50" src=' . asset("images/logo-pemuda-muhammadiyah.png") . '>
+                        </div>
+                        <div>
+                            <img width="60" src=' . asset("images/logo-muswil-pemuda.png") . '>
+                        </div>
+                    </div>'
+            ));
     }
 }
