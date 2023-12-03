@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CandidateResource\Pages;
 
 use App\Filament\Resources\CandidateResource;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -16,6 +17,19 @@ class ListCandidates extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->label('Tambah Kandidat')
+                ->button()
+                ->outlined(),
+            Action::make('vote')
+                ->label('Berikan Suara')
+                ->url($this->getResource()::getUrl('vote'))
         ];
     }
 
