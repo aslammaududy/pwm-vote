@@ -53,6 +53,8 @@ class VoteCandidate extends Page implements HasForms
             }
         }
 
+        auth()->user()->update(['has_chosen' => true]);
+
         //reset form
         $this->form->fill();
 
