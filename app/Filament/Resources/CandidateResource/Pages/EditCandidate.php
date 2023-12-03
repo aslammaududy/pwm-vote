@@ -10,6 +10,11 @@ class EditCandidate extends EditRecord
 {
     protected static string $resource = CandidateResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getActions(): array
     {
         return [
