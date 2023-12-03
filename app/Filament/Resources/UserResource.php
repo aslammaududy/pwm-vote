@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class UserResource extends Resource
@@ -57,8 +58,16 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama'),
-                Tables\Columns\TextColumn::make('username'),
+                    ->label('Nama')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->whereFullText('name', $search . '*', ['mode' => 'boolean']);
+                    }),
+                Tables\Columns\TextColumn::make('username')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->whereFullText('username', $search . '*', ['mode' => 'boolean']);
+                    }),
                 Tables\Columns\TextColumn::make('is_admin')
                     ->label('Admin')
                     ->formatStateUsing(fn(string $state): string => $state == 1 ? 'Ya' : 'Tidak'),
@@ -67,6 +76,13 @@ class UserResource extends Resource
                     ->formatStateUsing(fn(string $state): string => $state == 1 ? 'Ya' : 'Tidak')
             ])->actions([
                 EditAction::make('edit')
+            ])->filters([
+                Tables\Filters\Filter::make('is_admin')
+                    ->label('Admin')
+                    ->query(fn(Builder $query): Builder => $query->where('is_admin', true)),
+                Tables\Filters\Filter::make('has_chosen')
+                    ->label('Telah memilih')
+                    ->query(fn(Builder $query): Builder => $query->where('has_chosen', true))
             ]);
     }
 
