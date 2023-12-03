@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -47,13 +48,21 @@ class CandidateResource extends Resource
                 ->label('Nama Kandidat')
                 ->searchable(query: function (Builder $query, string $search): Builder {
                     return $query
-                        ->whereFullText('name', $search, ['mode' => 'natural']);
+                        ->whereFullText('name', $search . '*', ['mode' => 'boolean']);
                 }),
             TextColumn::make('votes')->label('Suara yang Didapat')
         ])
             ->actions([
                 EditAction::make('edit'),
                 DeleteAction::make('delete')
+            ])
+            ->filters([
+                Filter::make('voted')
+                    ->label('Memiliki suara')
+                    ->query(fn(Builder $query): Builder => $query->where('votes', '>', 0)),
+                Filter::make('unvoted')
+                    ->label('Tidak memiliki suara')
+                    ->query(fn(Builder $query): Builder => $query->where('votes', 0)),
             ])
             ->deferLoading();
     }
