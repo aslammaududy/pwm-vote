@@ -19,8 +19,8 @@ class CandidateResource extends Resource
 {
     protected static ?string $model = Candidate::class;
 
-    protected static ?string $label = 'Kandidat';
-    protected static ?string $navigationLabel = 'Kandidat';
+    protected static ?string $label = 'Formatur';
+    protected static ?string $navigationLabel = 'Formatur';
     protected static ?string $slug = 'candidates';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'id';
