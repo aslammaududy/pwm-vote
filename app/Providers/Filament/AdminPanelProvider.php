@@ -74,15 +74,15 @@ class AdminPanelProvider extends PanelProvider
             ->brandName(new HtmlString(
                     '<div class="grid grid-flow-col auto-cols-max">
                         <div>
-                            <img width="50" src=' . asset("images/logo-pemuda-muhammadiyah.png") . '>
+                            <img width="50" src=' . asset("images/logo-pemuda-muhammadiyah-10-x-10.png") . '>
                         </div>
                         <div>
-                            <img width="60" src=' . asset("images/logo-muswil-pemuda.png") . '>
+                            <img width="60" src=' . asset("images/logo-muswil-pemuda-10-x-10.png") . '>
                         </div>
                     </div>'
                 )
             )
-            ->favicon(asset("images/logo-muswil-pemuda.png"))
+            ->favicon(asset("images/logo-muswil-pemuda-fav.png"))
             ->darkMode(false);
     }
 }
