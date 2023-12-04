@@ -51,8 +51,9 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('username')->required(),
                     Forms\Components\TextInput::make('password')
                         ->password()
+                        ->required()
                         ->hidden(function (Request $request, Forms\Set $set) {
-                            return self::getRouteBaseName() === 'filament.admin.resources.users';
+                            return $request->route()->getName() === Pages\EditUser::getRouteName();
                         }),
                     Forms\Components\Toggle::make('is_admin')
                         ->onColor('success')
