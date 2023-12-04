@@ -34,6 +34,7 @@ class CandidateResource extends Resource
     {
         return auth()->user()->username === 'admin';
     }
+
     public static function getNavigationUrl(): string
     {
         if (!auth()->user()->is_admin) {
@@ -74,6 +75,8 @@ class CandidateResource extends Resource
                     ->label('Tidak memiliki suara')
                     ->query(fn(Builder $query): Builder => $query->where('votes', 0)),
             ])
+            ->modifyQueryUsing(fn(Builder $query) => $query->orderByDesc('votes'))
+            ->paginated([11, 26, 51, 100, 'all'])
             ->deferLoading();
     }
 
