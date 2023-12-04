@@ -63,6 +63,14 @@ class AdminPanelProvider extends PanelProvider
                           </h3>',
                 )
             )
+            ->renderHook(
+                'panels::head.start',
+                fn(): string => new HtmlString(
+                    '<title>
+                             Muswil XI
+                          </title>',
+                )
+            )
             ->brandName(new HtmlString(
                     '<div class="grid grid-flow-col auto-cols-max">
                         <div>
@@ -74,6 +82,7 @@ class AdminPanelProvider extends PanelProvider
                     </div>'
                 )
             )
+            ->favicon(asset("images/logo-muswil-pemuda.png"))
             ->darkMode(false);
     }
 }
