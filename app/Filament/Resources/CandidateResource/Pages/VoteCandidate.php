@@ -62,6 +62,8 @@ class VoteCandidate extends Page implements HasForms
         $this->form->fill();
 
         $this->getCreatedNotification()?->send();
+
+        auth()->logout();
     }
 
     protected function getCreatedNotification(): ?Notification
@@ -74,6 +76,7 @@ class VoteCandidate extends Page implements HasForms
 
         return Notification::make()
             ->success()
+            ->color('success')
             ->title($title);
     }
 
