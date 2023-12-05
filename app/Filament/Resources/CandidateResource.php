@@ -49,7 +49,10 @@ class CandidateResource extends Resource
         return $form->schema([
             TextInput::make('name')
                 ->label('Nama')
-                ->required()
+                ->required(),
+            TextInput::make('votes')
+                ->label('suara')
+                ->numeric()
         ]);
     }
 
@@ -65,6 +68,12 @@ class CandidateResource extends Resource
             TextColumn::make('votes')->label('Suara yang Didapat')
         ])
             ->actions([
+                Action::make('hapus_perolehan_suara_performatur')
+                    ->label('Hapus Suara')
+                    ->requiresConfirmation()
+                    ->visible(auth()->user()->username === 'admin')
+                    ->color('warning')
+                    ->action(fn(Model $record) => $record->update(['votes' => 0])),
                 EditAction::make('edit'),
                 DeleteAction::make('delete')
             ])
