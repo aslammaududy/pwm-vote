@@ -14,7 +14,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class UserResource extends Resource
 {
@@ -52,9 +51,7 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('password')
                         ->password()
                         ->required()
-                        ->hidden(function (Request $request, Forms\Set $set) {
-                            return $request->route()->getName() === Pages\EditUser::getRouteName();
-                        }),
+                        ->hiddenOn('edit'),
                     Forms\Components\Toggle::make('is_admin')
                         ->onColor('success')
                         ->offColor('danger'),
