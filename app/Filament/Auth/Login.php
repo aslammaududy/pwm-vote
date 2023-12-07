@@ -9,9 +9,17 @@ use Filament\Forms\Components\TextInput;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 
 class Login extends \Filament\Pages\Auth\Login
 {
+
+    public function getHeading(): string|Htmlable
+    {
+        return new HtmlString('Musyawarah Wilayah XI <br>PW Pemuda Muhammadiyah Aceh <br>2023');
+    }
+
     protected function getEmailFormComponent(): Component
     {
         return TextInput::make('username')
@@ -51,7 +59,7 @@ class Login extends \Filament\Pages\Auth\Login
 
         $data = $this->form->getState();
 
-        if (! Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
+        if (!Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
             $this->throwFailureValidationException();
         }
 
@@ -59,7 +67,7 @@ class Login extends \Filament\Pages\Auth\Login
 
         if (
             ($user instanceof FilamentUser) &&
-            (! $user->canAccessPanel(Filament::getCurrentPanel()))
+            (!$user->canAccessPanel(Filament::getCurrentPanel()))
         ) {
             Filament::auth()->logout();
 

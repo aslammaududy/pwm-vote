@@ -59,7 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 'panels::topbar.start',
                 fn(): string => new HtmlString(
                     '<h3>
-                              Musyawarah Wilayah Ke XI Pemuda Muhammadiyah Aceh - Banda Aceh, 8 - 10 Des 2023
+                              Musyawarah Wilayah XI Pemuda Muhammadiyah Aceh - Banda Aceh, 8 - 10 Des 2023
                           </h3>',
                 )
             )
