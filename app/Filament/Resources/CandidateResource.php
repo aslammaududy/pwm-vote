@@ -53,6 +53,7 @@ class CandidateResource extends Resource
             TextInput::make('votes')
                 ->label('suara')
                 ->numeric()
+                ->default(0)
         ]);
     }
 
