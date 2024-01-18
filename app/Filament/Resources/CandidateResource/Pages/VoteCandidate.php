@@ -10,6 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class VoteCandidate extends Page implements HasForms
@@ -45,6 +46,19 @@ class VoteCandidate extends Page implements HasForms
     public function submit()
     {
         $data = $this->form->getState();
+
+        $filtered = Arr::where($data, function ($value, $key) {
+            return $value === true;
+        });
+
+        if (count($filtered) < 9) {
+
+            Notification::make()
+                ->title('Pastikan memilih minimal 9 formatur')
+                ->warning()
+                ->send();
+            return;
+        }
 
         foreach ($data as $key => $item) {
             $id = Str::of($key)->remove('vote_');
