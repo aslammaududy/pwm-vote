@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CandidateResource\Pages;
+use App\Filament\Resources\CandidateResource\Widgets\CandidateOverview;
 use App\Models\Candidate;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -42,6 +43,13 @@ class CandidateResource extends Resource
             return Pages\VoteCandidate::getNavigationUrl();
         }
         return parent::getNavigationUrl();
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+          CandidateOverview::class
+        ];
     }
 
     public static function form(Form $form): Form

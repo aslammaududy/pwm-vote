@@ -33,6 +33,13 @@ class ListCandidates extends ListRecords
         ];
     }
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CandidateResource\Widgets\CandidateOverview::class
+        ];
+    }
+
     protected function paginateTableQuery(Builder $query): Paginator
     {
         return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
