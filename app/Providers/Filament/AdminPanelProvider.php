@@ -59,7 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 'panels::topbar.start',
                 fn(): string => new HtmlString(
                     '<h3>
-                              Musyawarah Wilayah XI Pemuda Muhammadiyah Aceh - Banda Aceh, 8 - 10 Des 2023
+                              MUSYAWARAH WILAYAH XXI IKATAN PELAJAR MUHAMMADIYAH ACEH Banda Aceh, 19-21 Januari 2024
                           </h3>',
                 )
             )
@@ -67,22 +67,22 @@ class AdminPanelProvider extends PanelProvider
                 'panels::head.start',
                 fn(): string => new HtmlString(
                     '<title>
-                             Muswil XI
+                             Muswil XXI
                           </title>',
                 )
             )
             ->brandName(new HtmlString(
                     '<div class="grid grid-flow-col auto-cols-max">
                         <div>
-                            <img width="50" src=' . asset("images/logo-pemuda-muhammadiyah-10-x-10.png") . '>
+                            <img width="60" src=' . asset("images/musywil-pelajar.png") . '>
                         </div>
                         <div>
-                            <img width="60" src=' . asset("images/logo-muswil-pemuda-10-x-10.png") . '>
+                            <img width="20" src=' . asset("images/Logo-Ikatan-Pelajar-Muhammadiyah-Resmi-10-x-10.png") . '>
                         </div>
                     </div>'
                 )
             )
-            ->favicon(asset("images/logo-muswil-pemuda-fav.png"))
+            ->favicon(asset("images/Logo-Ikatan-Pelajar-Muhammadiyah-Resmi-10-x-10.png"))
             ->darkMode(false);
     }
 }
