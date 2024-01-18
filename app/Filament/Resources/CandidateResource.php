@@ -87,7 +87,7 @@ class CandidateResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->where('votes', 0)),
             ])
             ->modifyQueryUsing(fn(Builder $query) => $query->orderByDesc('votes'))
-            ->paginated([11, 26, 51, 100, 'all'])
+            ->paginated([9, 24, 49, 100, 'all'])
             ->headerActions([
                 Action::make('hapus_semua_formatur')
                     ->requiresConfirmation()
