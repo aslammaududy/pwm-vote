@@ -71,15 +71,19 @@ class AdminPanelProvider extends PanelProvider
                           </title>',
                 )
             )
+//            ->brandName(new HtmlString(
+//                    '<div class="grid grid-flow-col auto-cols-max">
+//                        <div>
+//                            <img width="60" src=' . asset("images/musywil-pelajar.png") . '>
+//                        </div>
+//                        <div>
+//                            <img width="20" src=' . asset("images/Logo-Ikatan-Pelajar-Muhammadiyah-Resmi-10-x-10.png") . '>
+//                        </div>
+//                    </div>'
+//                )
+//            )
             ->brandName(new HtmlString(
-                    '<div class="grid grid-flow-col auto-cols-max">
-                        <div>
-                            <img width="60" src=' . asset("images/musywil-pelajar.png") . '>
-                        </div>
-                        <div>
-                            <img width="20" src=' . asset("images/Logo-Ikatan-Pelajar-Muhammadiyah-Resmi-10-x-10.png") . '>
-                        </div>
-                    </div>'
+                    '<img width=150 src=' . asset("images/musywilipm-removebg.png") . '>'
                 )
             )
             ->favicon(asset("images/Logo-Ikatan-Pelajar-Muhammadiyah-Resmi-10-x-10.png"))
