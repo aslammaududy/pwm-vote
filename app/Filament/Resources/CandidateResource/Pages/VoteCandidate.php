@@ -51,10 +51,10 @@ class VoteCandidate extends Page implements HasForms
             return $value === true;
         });
 
-        if (count($filtered) < 9) {
+        if (count($filtered) < 9 || count($filtered) > 9) {
 
             Notification::make()
-                ->title('Pastikan memilih minimal 9 formatur')
+                ->title('Pastikan memilih 9 formatur')
                 ->warning()
                 ->send();
             return;
